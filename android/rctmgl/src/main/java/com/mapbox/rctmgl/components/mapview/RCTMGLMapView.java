@@ -1286,8 +1286,12 @@ public class RCTMGLMapView extends MapView implements
         properties.putBoolean("animated", mCameraChangeTracker.isAnimated());
         properties.putBoolean("isUserInteraction", mCameraChangeTracker.isUserInteraction());
 
-        VisibleRegion visibleRegion = mMap.getProjection().getVisibleRegion();
-        properties.putArray("visibleBounds", GeoJSONUtils.fromLatLngBounds(visibleRegion.latLngBounds));
+	try {
+	    VisibleRegion visibleRegion = mMap.getProjection().getVisibleRegion();
+	    properties.putArray("visibleBounds", GeoJSONUtils.fromLatLngBounds(visibleRegion.latLngBounds));
+	} catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         return GeoJSONUtils.toPointFeature(latLng, properties);
     }
